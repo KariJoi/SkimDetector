@@ -1,0 +1,158 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<style>
+    #video-container {
+        position: relative;
+        max-width: 640px;
+        margin: 0 auto;
+    }
+    
+    #video {
+        width: 100%;
+        border-radius: 8px;
+        border: 2px solid var(--bs-dark);
+    }
+    
+    #canvas {
+        display: none;
+    }
+    
+    .camera-controls {
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .analysis-section {
+        margin-top: 20px;
+        display: none;
+    }
+    
+    .capture-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 8px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .capture-overlay.visible {
+        opacity: 1;
+    }
+    
+    .loading-spinner {
+        display: none;
+    }
+    
+    .result-image {
+        max-width: 100%;
+        border-radius: 8px;
+        border: 1px solid var(--bs-gray);
+        margin-top: 10px;
+    }
+    
+    .probability-meter {
+        height: 20px;
+        border-radius: 10px;
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-4 text-center">Skimmer Detection</h1>
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h2 class="h5 mb-0"><i class="fas fa-camera"></i> Card Reader Scanner</h2>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info" id="instructions">
+                    <h4 class="alert-heading"><i class="fas fa-info-circle"></i> How to scan:</h4>
+                    <ol>
+                        <li>Position your camera to clearly see the entire card reader</li>
+                        <li>Make sure the lighting is good and the reader is in focus</li>
+                        <li>Try to get a straight-on view of the card slot</li>
+                        <li>Click "Capture" when ready</li>
+                    </ol>
+                </div>
+            
+                <div id="video-container">
+                    <video id="video" autoplay playsinline></video>
+                    <canvas id="canvas"></canvas>
+                    <div class="capture-overlay" id="capture-overlay">
+                        <i class="fas fa-camera fa-3x text-white"></i>
+                    </div>
+                </div>
+                
+                <div class="camera-controls">
+                    <button id="capture-btn" class="btn btn-primary">
+                        <i class="fas fa-camera"></i> Capture
+                    </button>
+                    <button id="retry-btn" class="btn btn-secondary" style="display: none;">
+                        <i class="fas fa-redo"></i> Retry
+                    </button>
+                </div>
+                
+                <div class="text-center mt-3 loading-spinner" id="loading-spinner">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p>Analyzing image...</p>
+                </div>
+                
+                <div class="analysis-section" id="analysis-section">
+                    <h3 class="mt-4">Analysis Results</h3>
+                    
+                    <div id="result-card" class="card mb-3">
+                        <div class="card-header">
+                            <h4 class="mb-0" id="result-title">Detection Result</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="result-message"></div>
+                            
+                            <div class="mt-3">
+                                <p><strong>Risk Assessment:</strong></p>
+                                <div class="progress probability-meter">
+                                    <div id="probability-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <p><strong>Analyzed Image:</strong></p>
+                                    <img id="result-image" class="result-image" src="" alt="Analyzed image with detection results">
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <a href="/report" class="btn btn-warning">
+                                    <i class="fas fa-exclamation-triangle"></i> Report This Skimmer
+                                </a>
+                                <a href="/education" class="btn btn-info ms-2">
+                                    <i class="fas fa-book"></i> Learn More About Skimmers
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/camera.js') }}"></script>
+<script src="{{ url_for('static', filename='js/skimmer_detection.js') }}"></script>
+{% endblock %}

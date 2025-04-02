@@ -1,0 +1,105 @@
+/* Custom styles for the CardGuardian app */
+
+/* Global styles */
+body {
+    padding-bottom: 20px;
+}
+
+/* Card styling */
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Hero section */
+.hero-banner {
+    background-color: var(--bs-primary-bg-subtle);
+    border-radius: 8px;
+    padding: 40px 20px;
+    margin-bottom: 30px;
+}
+
+/* Feature icons */
+.feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    font-size: 2rem;
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+    color: var(--bs-primary);
+    margin-bottom: 1rem;
+}
+
+/* Alert styling */
+.alert {
+    border-radius: 8px;
+}
+
+/* Button styling */
+.btn {
+    border-radius: 6px;
+}
+
+/* Camera styles */
+.camera-container {
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--bs-dark);
+}
+
+/* Custom animations */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-primary-rgb), 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(var(--bs-primary-rgb), 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-primary-rgb), 0);
+    }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+/* Detection result styling */
+.result-positive {
+    border-left: 5px solid var(--bs-danger);
+}
+
+.result-negative {
+    border-left: 5px solid var(--bs-success);
+}
+
+/* Override for loading spinner */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Footer styling */
+footer {
+    margin-top: 50px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-banner {
+        padding: 20px 10px;
+    }
+    
+    .feature-icon {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<style>
+    .feature-icon {
+        font-size: 2rem;
+        color: var(--bs-info);
+    }
+    .hero-section {
+        background-color: rgba(13, 110, 253, 0.1);
+        border-radius: 1rem;
+        padding: 3rem 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-center my-5">
+    <h1 class="display-4">Protect Yourself From Card Skimmers</h1>
+    <p class="lead">CardGuardian helps you identify and report card skimming devices at ATMs, gas pumps, and other point-of-sale terminals.</p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-4">
+        <a href="/detection" class="btn btn-primary btn-lg px-4 gap-3">
+            <i class="fas fa-camera"></i> Scan Now
+        </a>
+        <a href="/education" class="btn btn-outline-secondary btn-lg px-4">
+            <i class="fas fa-book"></i> Learn More
+        </a>
+    </div>
+</section>
+
+<!-- Key Features -->
+<section class="my-5">
+    <h2 class="text-center mb-4">How It Works</h2>
+    <div class="row g-4 py-3">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3 class="card-title">Scan Card Readers</h3>
+                    <p class="card-text">Use your phone camera to quickly scan any card reader before using it.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="card-title">Detect Skimmers</h3>
+                    <p class="card-text">Our image recognition technology identifies suspicious modifications and potential skimming devices.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3 class="card-title">Report Dangers</h3>
+                    <p class="card-text">Report suspicious devices to help protect others and alert authorities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="my-5 py-4 bg-dark rounded">
+    <div class="container">
+        <h2 class="text-center mb-4">Card Skimming Facts</h2>
+        <div class="row text-center">
+            <div class="col-md-4 mb-3">
+                <h3 class="display-4">$1B+</h3>
+                <p class="lead">Annual losses from skimming fraud</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h3 class="display-4">10M+</h3>
+                <p class="lead">Americans affected yearly</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h3 class="display-4">30s</h3>
+                <p class="lead">Time to install a skimmer</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="my-5 text-center">
+    <div class="p-5 bg-light rounded-3">
+        <h2>Ready to stay protected?</h2>
+        <p class="lead">Start scanning card readers before you use them to avoid becoming a victim of card skimming fraud.</p>
+        <a href="/detection" class="btn btn-primary btn-lg mt-3">
+            <i class="fas fa-shield-alt"></i> Start Scanning
+        </a>
+    </div>
+</section>
+{% endblock %}

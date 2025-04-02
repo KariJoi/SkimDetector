@@ -1,0 +1,234 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<style>
+    .info-card {
+        margin-bottom: 20px;
+        border-left: 4px solid var(--bs-primary);
+    }
+    
+    .comparison-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+    
+    .warning-signs li {
+        margin-bottom: 12px;
+    }
+    
+    .tips-section {
+        background-color: rgba(13, 110, 253, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 30px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-4">Card Skimmer Education</h1>
+
+<div class="row mb-5">
+    <div class="col-lg-8 offset-lg-2">
+        <div class="card info-card">
+            <div class="card-body">
+                <h2>What Are Card Skimmers?</h2>
+                <p class="lead">Card skimmers are illegal devices criminals attach to legitimate card readers to steal your card information when you swipe or insert your card.</p>
+                <p>These malicious devices are typically placed on ATMs, gas pumps, and other point-of-sale terminals. They're designed to blend in and look like part of the original machine, making them difficult to spot without careful inspection.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Comparison Section -->
+<div class="row mb-5">
+    <div class="col-lg-10 offset-lg-1">
+        <h2 class="text-center mb-4">Normal vs. Compromised Card Readers</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header text-center bg-success text-white">
+                        <h3 class="h5 mb-0">Normal Card Reader</h3>
+                    </div>
+                    <div class="card-body text-center">
+                        <object class="comparison-image" data="{{ url_for('static', filename='svg/normal_reader.svg') }}" type="image/svg+xml">
+                            Normal Card Reader
+                        </object>
+                        <ul class="text-start">
+                            <li>Flush with the machine surface</li>
+                            <li>Consistent color and material</li>
+                            <li>No loose parts or components</li>
+                            <li>Keypad feels solid and normal</li>
+                            <li>Card slot is secure and well-fitted</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header text-center bg-danger text-white">
+                        <h3 class="h5 mb-0">Compromised Card Reader</h3>
+                    </div>
+                    <div class="card-body text-center">
+                        <object class="comparison-image" data="{{ url_for('static', filename='svg/skimmer_reader.svg') }}" type="image/svg+xml">
+                            Compromised Card Reader
+                        </object>
+                        <ul class="text-start">
+                            <li>Bulky or protruding card slot</li>
+                            <li>Different color or material than rest of machine</li>
+                            <li>Loose or wiggly components</li>
+                            <li>Keypad overlay feels different or soft</li>
+                            <li>Extra cameras or unusual devices nearby</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Types of Skimmers -->
+<div class="row mb-5">
+    <div class="col-lg-10 offset-lg-1">
+        <h2 class="text-center mb-4">Common Types of Skimming Devices</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header text-center">
+                        <h3 class="h5 mb-0">Overlay Skimmers</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>These fit over the existing card slot and read your card as it passes through to the real reader.</p>
+                        <h4 class="h6">Warning Signs:</h4>
+                        <ul>
+                            <li>Card slot appears bulkier than normal</li>
+                            <li>Slot wiggles or moves when touched</li>
+                            <li>Different color or material than the rest of the machine</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header text-center">
+                        <h3 class="h5 mb-0">Deep-Insert Skimmers</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>These are inserted deep into the card reader slot and are very difficult to detect visually.</p>
+                        <h4 class="h6">Warning Signs:</h4>
+                        <ul>
+                            <li>Card doesn't insert smoothly</li>
+                            <li>Unusual resistance when inserting card</li>
+                            <li>Card feels "gripped" or sticky when inserted</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header text-center">
+                        <h3 class="h5 mb-0">Keypad Overlays</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>These are placed over the keypad to capture your PIN while a separate device captures your card data.</p>
+                        <h4 class="h6">Warning Signs:</h4>
+                        <ul>
+                            <li>Keypad feels spongier than usual</li>
+                            <li>Keys are harder to press or feel different</li>
+                            <li>Keypad appears thicker or raised</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Examples Section -->
+<div class="row mb-5">
+    <div class="col-lg-10 offset-lg-1">
+        <h2 class="text-center mb-4">Real-World Examples</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <object class="img-fluid rounded mb-4" style="max-height: 400px;" data="{{ url_for('static', filename='svg/card_skimmer_examples.svg') }}" type="image/svg+xml">
+                        Card Skimmer Examples
+                    </object>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="h4">Common Locations</h3>
+                        <ul>
+                            <li><strong>ATMs</strong> - especially in tourist areas or isolated locations</li>
+                            <li><strong>Gas Pumps</strong> - pumps farthest from the store are common targets</li>
+                            <li><strong>Retail POS Terminals</strong> - particularly in busy stores with limited supervision</li>
+                            <li><strong>Transit Ticket Machines</strong> - often in crowded stations</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="h4">Warning Signs</h3>
+                        <ul class="warning-signs">
+                            <li>Card slot feels loose or wiggles when touched</li>
+                            <li>Parts of the machine look newer or a different color</li>
+                            <li>Unusual attachments or wires visible</li>
+                            <li>Security seals on gas pumps are broken or tampered with</li>
+                            <li>Hidden cameras pointing at the keypad</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Safety Tips -->
+<div class="row">
+    <div class="col-lg-10 offset-lg-1">
+        <div class="tips-section">
+            <h2 class="text-center mb-4">How to Protect Yourself</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h3 class="h4">Before Using a Card Reader</h3>
+                            <ul>
+                                <li>Inspect the card reader for any signs of tampering</li>
+                                <li>Wiggle the card slot to check if it's loose</li>
+                                <li>Compare the machine to others nearby to spot differences</li>
+                                <li>Look for broken seals or security stickers (especially on gas pumps)</li>
+                                <li>Check for hidden cameras near the keypad</li>
+                                <li>Use our CardGuardian app to scan the device</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h3 class="h4">During and After Transactions</h3>
+                            <ul>
+                                <li>Always cover the keypad with your hand when entering PIN</li>
+                                <li>Use contactless payment methods when available</li>
+                                <li>Use credit cards instead of debit cards when possible</li>
+                                <li>Monitor your accounts regularly for suspicious activity</li>
+                                <li>Report suspicious devices to the establishment and authorities</li>
+                                <li>If you suspect a skimmer, use a different machine</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="/detection" class="btn btn-primary btn-lg">
+                    <i class="fas fa-camera"></i> Scan a Card Reader Now
+                </a>
+                <a href="/report" class="btn btn-warning btn-lg ms-2">
+                    <i class="fas fa-exclamation-triangle"></i> Report a Suspicious Device
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
