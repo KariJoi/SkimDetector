@@ -1,17 +1,21 @@
-# This file would typically contain database models
-# For this simple in-memory application, we're not using a database
-# But we'll define structures here for future expansion
+from app import db
+from datetime import datetime
 
-class Report:
+class Report(db.Model):
     """
     Represents a skimmer report from a user
     """
-    def __init__(self, id, location, description, image_data, timestamp, status="Submitted"):
-        self.id = id
+    id = db.Column(db.Integer, primary_key=True)
+    location = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    image_data = db.Column(db.Text)  # Base64 encoded image
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    status = db.Column(db.String(50), default="Submitted")
+    
+    def __init__(self, location, description, image_data, status="Submitted"):
         self.location = location
         self.description = description
         self.image_data = image_data
-        self.timestamp = timestamp
         self.status = status
         
     def to_dict(self):
@@ -20,6 +24,6 @@ class Report:
             'location': self.location,
             'description': self.description,
             'image_data': self.image_data,
-            'timestamp': self.timestamp,
+            'timestamp': self.timestamp.isoformat() if self.timestamp else None,
             'status': self.status
         }

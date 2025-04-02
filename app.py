@@ -4,7 +4,9 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 import base64
 import json
 from datetime import datetime
-import uuid
+import sqlalchemy
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase
 from utils.image_processor import process_image
 from utils.skimmer_detector import detect_skimmer
 
@@ -12,13 +14,31 @@ from utils.skimmer_detector import detect_skimmer
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+# Setup SQLAlchemy database
+class Base(DeclarativeBase):
+    pass
+
+db = SQLAlchemy(model_class=Base)
+
 # Initialize Flask app
 app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "default-secret-key-for-development")
 
-# In-memory storage for reports
-# In a production app, this would be a database
-reports = []
+# Configure database
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "pool_recycle": 300,
+    "pool_pre_ping": True,
+}
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+# Initialize the database with the app
+db.init_app(app)
+
+# Import models after db initialization to avoid circular imports
+with app.app_context():
+    from models import Report
+    db.create_all()
 
 @app.route('/')
 def index():
@@ -36,6 +56,12 @@ def education():
 def report():
     return render_template('report.html')
 
+@app.route('/reports')
+def reports():
+    # Fetch all reports from the database
+    all_reports = Report.query.order_by(Report.timestamp.desc()).all()
+    return render_template('reports.html', reports=all_reports)
+
 @app.route('/submit_report', methods=['POST'])
 def submit_report():
     try:
@@ -47,23 +73,21 @@ def submit_report():
             flash('Please include an image of the suspected skimmer device', 'danger')
             return redirect(url_for('report'))
         
-        # Create a report
-        report_id = str(uuid.uuid4())
-        report = {
-            'id': report_id,
-            'location': location,
-            'description': description,
-            'image_data': image_data,
-            'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'status': 'Submitted'
-        }
+        # Create a new report using the database model
+        new_report = Report(
+            location=location,
+            description=description,
+            image_data=image_data
+        )
         
-        # Save the report (in-memory for this example)
-        reports.append(report)
+        # Save the report to the database
+        db.session.add(new_report)
+        db.session.commit()
         
         flash('Report submitted successfully! Thank you for helping keep the community safe.', 'success')
         return redirect(url_for('index'))
     except Exception as e:
+        db.session.rollback()
         logger.error(f"Error submitting report: {e}")
         flash('An error occurred while submitting your report. Please try again.', 'danger')
         return redirect(url_for('report'))
