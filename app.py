@@ -51,6 +51,10 @@ def detection():
 @app.route('/education')
 def education():
     return render_template('education.html')
+    
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 @app.route('/report')
 def report():
@@ -123,3 +127,22 @@ def page_not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500
+    
+@app.route('/send_message', methods=['POST'])
+def send_message():
+    try:
+        name = request.form.get('name', '')
+        email = request.form.get('email', '')
+        subject = request.form.get('subject', '')
+        message = request.form.get('message', '')
+        
+        # In a real application, this would send an email or save to database
+        # For now, we'll just log it and show a success message
+        logger.info(f"Message received from {name} ({email}): {subject}")
+        
+        flash('Thank you for your message! We will get back to you soon.', 'success')
+        return redirect(url_for('contact'))
+    except Exception as e:
+        logger.error(f"Error sending message: {e}")
+        flash('An error occurred while sending your message. Please try again.', 'danger')
+        return redirect(url_for('contact'))
